@@ -8,6 +8,7 @@ public:
             if (it != hash.end() && it->second != i) {
                 return {it->second, i};
             }
+            // 放在后面，避免重复元素构成target
             hash[nums[i]] = i;
         }
         return {};
