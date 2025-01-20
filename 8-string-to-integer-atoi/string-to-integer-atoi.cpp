@@ -5,24 +5,19 @@ public:
         bool flag = false;
         bool begin = false;
         for (int i = 0; i < s.length(); i++) {
-            if (s[i] == '+') {
+            if (s[i] == '+' || s[i] == '-') {
                 if (begin) {
                     break;
                 }
                 begin = true;
-                continue;
-            }
-            if (s[i] == '-') {
-                if (begin) {
-                    break;
+                if(s[i] == '-') {
+                    flag = true;
                 }
-                flag = true;
-                begin = true;
                 continue;
             }
 
             if (s[i] < '0' || s[i] > '9') {
-                if ((isspace(s[i]) || s[i] == '+') && !begin) {
+                if ((isspace(s[i])) && !begin) {
                     continue;
                 }
                 break;
