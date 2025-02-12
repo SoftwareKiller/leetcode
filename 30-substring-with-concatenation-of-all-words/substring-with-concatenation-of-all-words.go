@@ -11,6 +11,8 @@ func findSubstring(s string, words []string) []int {
 
     length := len(words[0])
     n := len(s)
+    // 滑动窗口解决方式，按单词分割
+    // offset含义为滑动窗口起始的位置，总长度模单词长度（len(s)%length）
     for offset := 0; offset < length; offset++ {
         windows := make(map[string]int)
         left := offset
