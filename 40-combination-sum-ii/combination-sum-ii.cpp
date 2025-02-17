@@ -9,6 +9,10 @@ public:
     }
 
     void backtrace(vector<int>& candidates, int target, int start, vector<int>& comb, vector<vector<int>>& ans) {
+        if (target < 0) {
+            return;
+        }
+        
         if (target == 0) {
             ans.push_back(comb);
             return;
@@ -19,9 +23,9 @@ public:
                 continue;
             }
 
-            if ((target - candidates[i]) < 0) {
-                continue;
-            }
+            // if ((target - candidates[i]) < 0) {
+            //     continue;
+            // }
             comb.push_back(candidates[i]);
             backtrace(candidates, target - candidates[i], i + 1, comb, ans);
             comb.pop_back();
