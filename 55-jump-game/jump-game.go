@@ -3,7 +3,7 @@ func canJump(nums []int) bool {
     curr := 0
     end := len(nums) - 1
 
-    for curr <= forest && forest < end {
+    for curr <= forest && curr < end {
         forest = max(forest, nums[curr]+curr)
         curr++
     }
