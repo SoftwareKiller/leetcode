@@ -1,23 +1,26 @@
 class Solution {
 public:
     int mySqrt(int x) {
-        if (x <= 0) {
-            return 0;
+        if (x == 0 || x == 1) {
+            return x;
         }
 
-        int64_t ans = 1;
-        while (ans < x) {
-            if ((ans*2) * (ans*2) <= x) {
-                ans *= 2;
-                continue;
+        int l = 1, r = x;
+        int64_t mid = -1;
+        while(l <= r) {
+            mid = l + (r - l) / 2;
+            int64_t square = mid * mid;
+            if (square == x) {
+                return mid;
             }
 
-            if ((ans+1) * (ans+1) <= x) {
-                ans++;
-                continue;
+            if (square > x) {
+                r = mid - 1;
+            } else {
+                l = mid + 1;
             }
-            break;
         }
-        return ans;
+
+        return r;
     }
 };
