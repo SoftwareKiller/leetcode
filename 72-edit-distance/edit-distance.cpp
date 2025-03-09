@@ -5,11 +5,11 @@ public:
         int n = word2.length();
         vector<vector<int>> dp(m + 1, vector<int>(n+1));
 
-        for (int i = 0; i <= m; i++) {
+        for (int i = 1; i <= m; i++) {
             dp[i][0] = i;
         }
 
-        for (int i = 0; i <= n; i++) {
+        for (int i = 1; i <= n; i++) {
             dp[0][i] = i;
         }
 
