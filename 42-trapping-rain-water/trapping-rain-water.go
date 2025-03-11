@@ -1,19 +1,21 @@
 func trap(height []int) int {
-    l, r := 0, len(height) - 1
-    lMax, rMax := height[l], height[r]
-    water := 0
+    st := make([]int, 0)
+    ans := 0
 
-    for l < r {
-        if lMax < rMax {
-            l++
-            lMax = max(lMax, height[l])
-            water += lMax - height[l]
-        } else {
-            r--
-            rMax = max(rMax, height[r])
-            water += rMax - height[r]
+    for i, h := range height {
+        for len(st) > 0 && h >= height[st[len(st) - 1]] {
+            t := st[len(st) - 1]
+            st = st[:len(st)-1]
+            if (len(st) == 0) {
+                break
+            }
+            l := st[len(st)-1]
+            sub := min(height[l], h) - height[t]
+            ans += (i - l - 1) * sub
         }
+
+        st = append(st, i)
     }
 
-    return water
+    return ans
 }
