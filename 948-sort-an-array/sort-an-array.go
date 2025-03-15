@@ -1,42 +1,51 @@
 func sortArray(nums []int) []int {
-    quicksort(nums, 0, len(nums) - 1)
+    mergeSort(nums, 0, len(nums) - 1)
     return nums
 }
 
-func mid(nums []int, l, r int) int {
-    mid := ((r - l) >> 1) + l
-    if nums[l] <= nums[mid] && nums[mid] < nums[r] {
-        return mid
-    }
-
-    if nums[mid] <= nums[l] && nums[l] <= nums[r] {
-        return l
-    }
-
-    return r
-}
-
-func quicksort(nums []int, l, r int) {
+func mergeSort(nums []int, l, r int) {
     if l >= r {
         return
     }
 
-    midNum := mid(nums, l, r)
-    nums[l], nums[midNum] = nums[midNum], nums[l]
+    mid := ((r - l) >> 1) + l
+    mergeSort(nums, l, mid)
+    mergeSort(nums, mid + 1, r)
 
-    i, j := l, r
-    for i < j {
-        for i < j && nums[j] >= nums[l] {
-            j--
-        }
+    merge(nums, l, mid, r)
+}
 
-        for i < j && nums[i] <= nums[l] {
+func merge(nums []int, l, mid, r int) {
+    i, j := l, mid + 1
+    curr := 0
+
+    t := make([]int, r - l + 1)
+
+    for i <= mid && j <= r {
+        if nums[i] < nums[j] {
+            t[curr] = nums[i]
             i++
+        } else {
+            t[curr] = nums[j]
+            j++
         }
-        nums[i], nums[j] = nums[j], nums[i]
+        curr++
     }
 
-    nums[l], nums[i] = nums[i], nums[l]
-    quicksort(nums, l, i - 1)
-    quicksort(nums, i + 1, r)
+    for i <= mid {
+        t[curr] = nums[i]
+        curr++
+        i++
+    }
+
+    for j <= r {
+        t[curr] = nums[j]
+        curr++
+        j++
+    }
+
+    i = l
+    for offset, n := range t {
+        nums[i+offset] = n
+    }
 }
