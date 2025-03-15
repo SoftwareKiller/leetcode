@@ -1,48 +1,35 @@
 class Solution {
 public:
     vector<int> sortArray(vector<int>& nums) {
-        mergeSort(nums, 0, nums.size() - 1);
+        int n = nums.size();
+        for (int i = n/2 - 1; i >= 0; i--) {
+            adjust(nums, n, i);
+        }
+
+        for (int i = n - 1; i >= 0; i--) {
+            swap(nums[0], nums[i]);
+            adjust(nums, i, 0);
+        }
+
         return nums;
     }
 
-    void mergeSort(vector<int>& nums, int l, int r) {
-        if (l >= r) {
-            return;
+    void adjust(vector<int>& nums, int n, int i) {
+        int largest = i;
+        int l = i * 2 + 1;
+        int r = i * 2 + 2;
+
+        if (l < n && nums[l] > nums[largest]) {
+            largest = l;
         }
 
-        int mid = ((r - l) >> 1) + l;
-        mergeSort(nums, l, mid);
-        mergeSort(nums, mid + 1, r);
-
-        merge(nums, l, mid, r);
-    }
-
-    void merge(vector<int>& nums, int l, int mid, int r) {
-        int i = l, j = mid + 1, curr = 0;
-        vector<int> t(r - l + 1);
-
-        while (i <= mid && j <= r) {
-            if (nums[i] < nums[j]) {
-                t[curr] = nums[i];
-                i++;
-            } else {
-                t[curr] = nums[j];
-                j++;
-            }
-            curr++;
+        if (r < n && nums[r] > nums[largest]) {
+            largest = r;
         }
 
-        while(i <= mid) {
-            t[curr++] = nums[i++];
-        }
-
-        while(j <= r) {
-            t[curr++] = nums[j++];
-        }
-
-        i = l;
-        for (int n : t) {
-            nums[i++] = n;
+        if (largest != i) {
+            swap(nums[i], nums[largest]);
+            adjust(nums, n, largest);
         }
     }
 };
