@@ -17,20 +17,24 @@ func sortArray(nums []int) []int {
 }
 
 func adjust(nums []int, n, i int) {
-    largest := i
-    l := i * 2 + 1
-    r := i * 2 + 2
+    for {
+        largest := i
+        l := i * 2 + 1
+        r := i * 2 + 2
 
-    if l < n && nums[l] > nums[largest] {
-        largest = l
-    }
+        if l < n && nums[l] > nums[largest] {
+            largest = l
+        }
 
-    if r < n && nums[r] > nums[largest] {
-        largest = r
-    }
+        if r < n && nums[r] > nums[largest] {
+            largest = r
+        }
 
-    if largest != i {
-        nums[i], nums[largest] = nums[largest], nums[i]
-        adjust(nums, n, largest)
+        if largest != i {
+            nums[i], nums[largest] = nums[largest], nums[i]
+            i = largest
+        } else {
+            break
+        }
     }
 }
