@@ -1,40 +1,34 @@
 func sortArray(nums []int) []int {
-    n := len(nums)
+    count := make([]int, 100001)
 
-    // 建堆
-    // 从最后一个叶子节点开始建堆
-    for i := n / 2 - 1; i >= 0; i-- {
-        adjust(nums, n, i)
-    }
+    const offset = 50000
 
-    // 排序
-    for i := n - 1; i >= 0; i-- {
-        nums[0], nums[i] = nums[i], nums[0]
-        adjust(nums, i, 0)
-    }
-
-    return nums
-}
-
-func adjust(nums []int, n, i int) {
-    for {
-        largest := i
-        l := i * 2 + 1
-        r := i * 2 + 2
-
-        if l < n && nums[l] > nums[largest] {
-            largest = l
-        }
-
-        if r < n && nums[r] > nums[largest] {
-            largest = r
-        }
-
-        if largest != i {
-            nums[i], nums[largest] = nums[largest], nums[i]
-            i = largest
+    for _, n := range nums {
+        if n < 0 {
+            n += offset
+            count[n]++
         } else {
-            break
+            count[n+offset]++
         }
     }
+
+    ans := make([]int, len(nums))
+    curr := 0
+    for i, cnt := range count {
+        if cnt == 0 {
+            continue
+        }
+
+        for j := 0; j < cnt; j++ {
+            n := i - offset
+            if i < 0 {
+                ans[curr] = n
+            } else {
+                ans[curr] = n
+            }
+            curr++
+        }
+    }
+
+    return ans
 }
