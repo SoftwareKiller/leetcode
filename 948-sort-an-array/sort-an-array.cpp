@@ -1,35 +1,32 @@
 class Solution {
 public:
     vector<int> sortArray(vector<int>& nums) {
-        int n = nums.size();
-        for (int i = n/2 - 1; i >= 0; i--) {
-            adjust(nums, n, i);
+        vector<int> count(100001);
+        const int offset = 50000;
+
+        for (int n : nums) {
+            if (n < 0) {
+                n = -n;
+                n = offset - n;
+                count[n]++;
+            } else {
+                count[n+offset]++;
+            }
         }
 
-        for (int i = n - 1; i >= 0; i--) {
-            swap(nums[0], nums[i]);
-            adjust(nums, i, 0);
+        vector<int> ans;
+        for (int i = 0; i < count.size(); i++) {
+            for (int j = 0; j < count[i]; j++) {
+                if (i < offset) {
+                    int n = i - offset;
+                    ans.push_back(n);
+                } else {
+                    int n = i - offset;
+                    ans.push_back(n);
+                }
+            }
         }
 
-        return nums;
-    }
-
-    void adjust(vector<int>& nums, int n, int i) {
-        int largest = i;
-        int l = i * 2 + 1;
-        int r = i * 2 + 2;
-
-        if (l < n && nums[l] > nums[largest]) {
-            largest = l;
-        }
-
-        if (r < n && nums[r] > nums[largest]) {
-            largest = r;
-        }
-
-        if (largest != i) {
-            swap(nums[i], nums[largest]);
-            adjust(nums, n, largest);
-        }
+        return ans;
     }
 };
