@@ -14,15 +14,16 @@ public:
             }
         }
 
-        vector<int> ans;
+        vector<int> ans(nums.size(), 0);
+        int curr = 0;
         for (int i = 0; i < count.size(); i++) {
             for (int j = 0; j < count[i]; j++) {
                 if (i < offset) {
                     int n = i - offset;
-                    ans.push_back(n);
+                    ans[curr++] = n;
                 } else {
                     int n = i - offset;
-                    ans.push_back(n);
+                    ans[curr++] = n;
                 }
             }
         }
