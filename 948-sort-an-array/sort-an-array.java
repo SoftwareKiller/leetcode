@@ -15,21 +15,25 @@ class Solution {
     }
 
     public void adjust(int[] nums, int n, int i) {
-        int largest = i;
-        int l = i * 2 + 1;
-        int r = i * 2 + 2;
+        while (true) {
+            int largest = i;
+            int l = i * 2 + 1;
+            int r = i * 2 + 2;
 
-        if (l < n && nums[l] > nums[largest]) {
-            largest = l;
-        }
+            if (l < n && nums[l] > nums[largest]) {
+                largest = l;
+            }
 
-        if (r < n && nums[r] > nums[largest]) {
-            largest = r;
-        }
+            if (r < n && nums[r] > nums[largest]) {
+                largest = r;
+            }
 
-        if (i != largest) {
-            swap(nums, i, largest);
-            adjust(nums, n, largest);
+            if (i != largest) {
+                swap(nums, i, largest);
+                i = largest;
+            } else {
+                break;
+            }
         }
     }
 
