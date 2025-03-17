@@ -21,15 +21,14 @@ func coinChange(coins []int, amount int) int {
             if sub == -1 {
                 continue
             }
-            ans = min(ans, 1 + sub)
+
+            ans = min(ans, sub + 1)
         }
 
         if ans == math.MaxInt {
             ans = -1
         }
-
         memo[n] = ans
-
         return memo[n]
     }
     return dp(amount)
