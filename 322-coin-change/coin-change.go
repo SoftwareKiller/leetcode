@@ -1,4 +1,5 @@
 func coinChange(coins []int, amount int) int {
+    // dp[i]表示，金额为i时，最少可用的金币
     dp := make([]int, amount + 1)
 
     for i := range dp {
